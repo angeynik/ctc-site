@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <AppHeader />
+    <AppHeader @open-request-form="showRequestForm = true" />
     
     <!-- Показываем компоненты лендинга только на главной странице -->
     <div v-if="isHomePage">
@@ -42,6 +42,11 @@
     <router-view v-else></router-view>
     
     <AppFooter />
+    <RequestForm 
+      :is-visible="showRequestForm" 
+      @close="showRequestForm = false" 
+    />
+
   </div>
 </template>
 
@@ -56,6 +61,7 @@ import AppClients from './components/AppClients.vue'
 import AppReviews from './components/AppReviews.vue'
 import AppWorkflow from './components/AppWorkflow.vue'
 import AppFooter from './components/AppFooter.vue'
+import RequestForm from './components/RequestForm.vue'
 
 export default {
   name: 'App',
@@ -69,7 +75,8 @@ export default {
     AppClients,
     AppReviews,
     AppWorkflow,
-    AppFooter
+    AppFooter,
+    RequestForm
   },
   data() {
     return {
@@ -82,7 +89,8 @@ export default {
         clients: true,
         reviews: true,
         workflow: true,
-      }
+      },
+      showRequestForm: false
     }
   },
   computed: {
