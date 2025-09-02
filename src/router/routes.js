@@ -13,11 +13,11 @@ import WorkFlow from '@/components/WorkFlow.vue';
 // import store from '@/store'; // Импортируем хранилище Vuex
 
 const routes = [
-    {
-    path: '/',
-    name: 'Home',
-    meta: { public: true }
-  },
+{
+  path: '/',
+  name: 'Home',
+  meta: { public: true }
+},
   {
     path: '/engineering',
     name: 'EngineeringSystems',

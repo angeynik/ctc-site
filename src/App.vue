@@ -2,41 +2,44 @@
   <div id="app">
     <AppHeader />
     
-    <!-- Компоненты лендинга с управлением видимостью -->
-    <!-- <router-view></router-view> -->
-
-    <AppEngineeringSystems 
-      v-if="visibility.engineering && $route.path === '/'"
-      @navigate="navigateTo('/engineering')"
-    />
-    <AppService 
-      v-if="visibility.engineering && $route.path === '/'"
-      @navigate="navigateTo('/service')"
-    />
-    <AppRepair 
-      v-if="visibility.repair"
-      @navigate="navigateTo('/repair')"
-    />
-    <AppAerodynamics 
-      v-if="visibility.aerodynamics"
-      @navigate="navigateTo('/aero')"
-    />
-    <AppAutomation 
-      v-if="visibility.automation"
-      @navigate="navigateTo('/automation')"
-    />
-    <AppClients 
-      v-if="visibility.clients"
-      @navigate="navigateTo('/clients')"
-    />
-    <AppReviews 
-      v-if="visibility.reviews"
-      @navigate="navigateTo('/reviews')"
-    />
-    <AppWorkflow 
-      v-if="visibility.workflow"
-      @navigate="navigateTo('/workflow')"
-    />
+    <!-- Показываем компоненты лендинга только на главной странице -->
+    <div v-if="isHomePage">
+      <AppEngineeringSystems 
+        v-if="visibility.engineering"
+        @navigate="navigateTo('/engineering')"
+      />
+      <AppService 
+        v-if="visibility.service"
+        @navigate="navigateTo('/service')"
+      />
+      <AppRepair 
+        v-if="visibility.repair"
+        @navigate="navigateTo('/repair')"
+      />
+      <AppAerodynamics 
+        v-if="visibility.aerodynamics"
+        @navigate="navigateTo('/aero')"
+      />
+      <AppAutomation 
+        v-if="visibility.automation"
+        @navigate="navigateTo('/automation')"
+      />
+      <AppClients 
+        v-if="visibility.clients"
+        @navigate="navigateTo('/clients')"
+      />
+      <AppReviews 
+        v-if="visibility.reviews"
+        @navigate="navigateTo('/reviews')"
+      />
+      <AppWorkflow 
+        v-if="visibility.workflow"
+        @navigate="navigateTo('/workflow')"
+      />
+    </div>
+    
+    <!-- Отображаем компоненты маршрутов -->
+    <router-view v-else></router-view>
     
     <AppFooter />
   </div>
@@ -80,6 +83,11 @@ export default {
         reviews: true,
         workflow: true,
       }
+    }
+  },
+  computed: {
+    isHomePage() {
+      return this.$route.path === '/';
     }
   },
   methods: {
