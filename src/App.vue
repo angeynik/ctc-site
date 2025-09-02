@@ -2,45 +2,55 @@
   <div id="app">
     <AppHeader @open-request-form="showRequestForm = true" />
     
+  <main class="main-content">
     <!-- Показываем компоненты лендинга только на главной странице -->
-    <div v-if="isHomePage">
+    <div v-if="isHomePage" class="landing-grid">
       <AppEngineeringSystems 
         v-if="visibility.engineering"
         @navigate="navigateTo('/engineering')"
+        class="select-component"
       />
       <AppService 
         v-if="visibility.service"
         @navigate="navigateTo('/service')"
+        class="select-component"
       />
       <AppRepair 
         v-if="visibility.repair"
         @navigate="navigateTo('/repair')"
+        class="select-component"
       />
       <AppAerodynamics 
         v-if="visibility.aerodynamics"
         @navigate="navigateTo('/aero')"
+        class="select-component"
       />
       <AppAutomation 
         v-if="visibility.automation"
         @navigate="navigateTo('/automation')"
+        class="select-component"
       />
       <AppClients 
         v-if="visibility.clients"
         @navigate="navigateTo('/clients')"
+        class="select-component"
       />
       <AppReviews 
         v-if="visibility.reviews"
         @navigate="navigateTo('/reviews')"
+        class="select-component"
       />
       <AppWorkflow 
         v-if="visibility.workflow"
         @navigate="navigateTo('/workflow')"
+        class="select-component"
       />
     </div>
     
     <!-- Отображаем компоненты маршрутов -->
     <router-view v-else></router-view>
-    
+  </main>
+
     <AppFooter />
     <RequestForm 
       :is-visible="showRequestForm" 

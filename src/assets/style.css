@@ -23,15 +23,344 @@
   background-color: var(--background_color);
   background: var(--background_color);
 }
+
+
+/* Создание переменных */
+:root {
+  --light_font: #E0DFE7;
+  --dark_font: #1E1E31;
+  --header_color: #4D576C;
+  --background_color: #1E1E31;
+  --orange: #F97B00;
+  --yellow: #F8B01E;
+  --violet: #5077f5;
+  --green: #34B534;
+  --red: #F91E00;
+
+  --sensor-green: #cfeecf;
+  --sensor-yellow: #ffe5cc;
+  --sensor-red: #fdbbb2;
+  --sensor-gray: #808080;
+
+  /* Размеры шрифтов для разных устройств */
+  --font-size-xs: 12px;
+  --font-size-sm: 14px;
+  --font-size-base: 16px;
+  --font-size-lg: 18px;
+  --font-size-xl: 20px;
+  --font-size-2xl: 24px;
+  --font-size-3xl: 30px;
+  --font-size-4xl: 36px;
+
+  /* Отступы */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 3rem;
+}
+
+/* Базовые стили для всех устройств */
+html {
+  font-size: var(--font-size-base);
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: var(--background_color);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Arial', sans-serif;
+  color: var(--light_font);
+  line-height: 1.6;
+}
+
+#app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header стили */
 .app-header {
-  background-color: var(--green);
+  background-color: var(--header_color);
+  padding: var(--spacing-md);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
+
+.app-header h1 {
+  margin: 0;
+  font-size: var(--font-size-xl);
+  color: var(--light_font);
+  cursor: pointer;
+}
+
+/* Main content area */
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: var(--spacing-md);
+}
+
+/* Footer стили */
+.app-footer {
+  background-color: var(--header_color);
+  padding: var(--spacing-md);
+  text-align: center;
+  margin-top: auto;
+}
+
+/* Компоненты лендинга */
+.landing-grid {
+  display: grid;
+  gap: var(--spacing-lg);
+  margin: var(--spacing-xl) 0;
+}
+
 .select-component {
-    cursor: pointer; /* Добавляем указатель, чтобы показать, что это кликабельно */
+  cursor: pointer;
+  padding: var(--spacing-lg);
+  border-radius: 8px;
+  background: linear-gradient(145deg, #2a2a4a, #232340);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 150px;
 }
+
 .select-component:hover {
-    background-color: #f0f0f0; /* Визуальный эффект при наведении */
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+  background: linear-gradient(145deg, #3a3a5a, #323250);
 }
+
+.select-component h1,
+.select-component h2,
+.select-component h3 {
+  margin: 0;
+  text-align: center;
+  color: var(--light_font);
+}
+
+/* Кнопка заявки */
+.request-btn {
+  background-color: var(--green);
+  color: white;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size-sm);
+  transition: background-color 0.3s ease;
+}
+
+.request-btn:hover {
+  background-color: #2b9b2b;
+}
+
+/* Медиа-запросы для разных устройств */
+
+/* Мобильные телефоны (до 768px) */
+@media (max-width: 768px) {
+  :root {
+    --font-size-base: 14px;
+    --font-size-lg: 16px;
+    --font-size-xl: 18px;
+    --font-size-2xl: 20px;
+    --font-size-3xl: 24px;
+    --font-size-4xl: 28px;
+  }
+
+  .app-header {
+    padding: var(--spacing-sm);
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+
+  .landing-grid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-md);
+  }
+
+  .select-component {
+    min-height: 120px;
+    padding: var(--spacing-md);
+  }
+
+  .main-content {
+    padding: var(--spacing-sm);
+  }
+}
+
+/* Планшеты (769px - 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+  :root {
+    --font-size-base: 16px;
+    --font-size-lg: 18px;
+    --font-size-xl: 20px;
+    --font-size-2xl: 22px;
+    --font-size-3xl: 26px;
+    --font-size-4xl: 30px;
+  }
+
+  .landing-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-lg);
+  }
+
+  .select-component {
+    min-height: 140px;
+  }
+}
+
+/* ПК (1025px и выше) */
+@media (min-width: 1025px) {
+  :root {
+    --font-size-base: 18px;
+    --font-size-lg: 20px;
+    --font-size-xl: 24px;
+    --font-size-2xl: 28px;
+    --font-size-3xl: 32px;
+    --font-size-4xl: 36px;
+  }
+
+  .landing-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-xl);
+    max-width: 1200px;
+    margin: var(--spacing-2xl) auto;
+  }
+
+  .select-component {
+    min-height: 180px;
+  }
+
+  .main-content {
+    padding: var(--spacing-lg);
+  }
+}
+
+/* Особо большие экраны (1440px и выше) */
+@media (min-width: 1440px) {
+  .landing-grid {
+    grid-template-columns: repeat(4, 1fr);
+    max-width: 1400px;
+  }
+}
+
+/* Форма заявки (адаптивная) */
+.request-form-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: var(--spacing-md);
+}
+
+.request-form-container {
+  background: white;
+  padding: var(--spacing-lg);
+  border-radius: 10px;
+  width: 100%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+}
+
+/* Адаптивность для формы */
+@media (max-width: 480px) {
+  .request-form-container {
+    padding: var(--spacing-md);
+    margin: var(--spacing-sm);
+  }
+  
+  .checkbox-group {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Утилитарные классы для гибкости */
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+
+.mt-1 { margin-top: var(--spacing-xs); }
+.mt-2 { margin-top: var(--spacing-sm); }
+.mt-3 { margin-top: var(--spacing-md); }
+.mt-4 { margin-top: var(--spacing-lg); }
+.mt-5 { margin-top: var(--spacing-xl); }
+
+.mb-1 { margin-bottom: var(--spacing-xs); }
+.mb-2 { margin-bottom: var(--spacing-sm); }
+.mb-3 { margin-bottom: var(--spacing-md); }
+.mb-4 { margin-bottom: var(--spacing-lg); }
+.mb-5 { margin-bottom: var(--spacing-xl); }
+
+.flex { display: flex; }
+.flex-column { flex-direction: column; }
+.flex-center { 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.grid { display: grid; }
+.grid-2 { grid-template-columns: repeat(2, 1fr); }
+.grid-3 { grid-template-columns: repeat(3, 1fr); }
+.grid-4 { grid-template-columns: repeat(4, 1fr); }
+
+/* Анимации */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.slide-up-enter-active,
+.slide-up-leave-active {
+  transition: all 0.3s ease;
+}
+
+.slide-up-enter-from,
+.slide-up-leave-to {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+
+
+
 
 /* Форма заявки и обратной связи */
 .request-form-overlay {
