@@ -53,6 +53,13 @@ li {
   margin: 0 10px;
 }
 a {
-  color: #42b983;
+  color: #2e4c3f;
+}
+html {
+  font-size: 18px; /* Теперь 1rem = 18px */
+  height: 100%; 
+  margin: 0; 
+  padding: 0; 
+  background: #2e4c3f;
 }
 </style>

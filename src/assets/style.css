@@ -1,0 +1,34 @@
+/* Создание переменных  */
+:root {
+  --light_font: #E0DFE7;
+  --dark_font: #1E1E31;
+  --header_color: #4D576C;
+  --background_color: #1E1E31;
+  --orange: #F97B00;
+  --yellow: #F8B01E;
+  --violet: #5077f5;
+  --green: #34B534;
+  --red: #F91E00;
+
+  --sensor-green: #cfeecf;
+  --sensor-yellow: #ffe5cc;
+  --sensor-red: #fdbbb2;
+  --sensor-gray: #808080;
+}
+.html {
+  font-size: 18px; /* Теперь 1rem = 18px */
+  height: 100%; 
+  margin: 0; 
+  padding: 0; 
+  background-color: var(--background_color);
+  background: var(--background_color);
+}
+.app-header {
+  background-color: var(--green);
+}
+.select-component {
+    cursor: pointer; /* Добавляем указатель, чтобы показать, что это кликабельно */
+}
+.select-component:hover {
+    background-color: #f0f0f0; /* Визуальный эффект при наведении */
+}
