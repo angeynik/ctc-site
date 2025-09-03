@@ -2,65 +2,65 @@
   <div id="app">
     <AppHeader @open-request-form="showRequestForm = true" />
     
-  <main class="main-content">
-    <!-- Показываем компоненты лендинга только на главной странице -->
-    <div v-if="isHomePage" class="landing-grid">
-      <AppEngineeringSystems 
-        v-if="visibility.engineering"
-        @navigate="navigateTo('/engineering')"
-        class="select-component"
-      />
-      <AppService 
-        v-if="visibility.service"
-        @navigate="navigateTo('/service')"
-        class="select-component"
-      />
-      <AppRepair 
-        v-if="visibility.repair"
-        @navigate="navigateTo('/repair')"
-        class="select-component"
-      />
-      <AppAerodynamics 
-        v-if="visibility.aerodynamics"
-        @navigate="navigateTo('/aero')"
-        class="select-component"
-      />
-      <AppAutomation 
-        v-if="visibility.automation"
-        @navigate="navigateTo('/automation')"
-        class="select-component"
-      />
-      <AppClients 
-        v-if="visibility.clients"
-        @navigate="navigateTo('/clients')"
-        class="select-component"
-      />
-      <AppReviews 
-        v-if="visibility.reviews"
-        @navigate="navigateTo('/reviews')"
-        class="select-component"
-      />
-      <AppWorkflow 
-        v-if="visibility.workflow"
-        @navigate="navigateTo('/workflow')"
-        class="select-component"
-      />
-    </div>
-    
-    <!-- Отображаем компоненты маршрутов -->
-    <router-view v-else></router-view>
-  </main>
+    <main class="main-content">
+      <!-- Показываем компоненты лендинга только на главной странице -->
+      <div v-if="isHomePage" class="landing-grid">
+        <AppEngineeringSystems 
+          v-if="visibility.engineering"
+          @navigate="navigateTo('/engineering')"
+          :class="getComponentClass('engineering')"
+        />
+        <AppService 
+          v-if="visibility.service"
+          @navigate="navigateTo('/service')"
+          :class="getComponentClass('service')"
+        />
+        <AppRepair 
+          v-if="visibility.repair"
+          @navigate="navigateTo('/repair')"
+          :class="getComponentClass('repair')"
+        />
+        <AppAerodynamics 
+          v-if="visibility.aerodynamics"
+          @navigate="navigateTo('/aero')"
+          :class="getComponentClass('aerodynamics')"
+        />
+        <AppAutomation 
+          v-if="visibility.automation"
+          @navigate="navigateTo('/automation')"
+          :class="getComponentClass('automation')"
+        />
+        <AppClients 
+          v-if="visibility.clients"
+          @navigate="navigateTo('/clients')"
+          :class="getComponentClass('clients')"
+        />
+        <AppReviews 
+          v-if="visibility.reviews"
+          @navigate="navigateTo('/reviews')"
+          :class="getComponentClass('reviews')"
+        />
+        <AppWorkflow 
+          v-if="visibility.workflow"
+          @navigate="navigateTo('/workflow')"
+          :class="getComponentClass('workflow')"
+        />
+      </div>
+      
+      <!-- Отображаем компоненты маршрутов -->
+      <router-view v-else></router-view>
+    </main>
 
     <AppFooter />
     <RequestForm 
       :is-visible="showRequestForm" 
       @close="showRequestForm = false" 
     />
-
   </div>
 </template>
 
 <script>
+
 import AppHeader from './components/AppHeader.vue'
 import AppEngineeringSystems from './components/AppEngineeringSystems.vue'
 import AppService from './components/AppService.vue'
@@ -95,8 +95,8 @@ export default {
         service: true,
         repair: true,
         aerodynamics: true,
-        automation: true,
-        clients: true,
+        automation: false,
+        clients: false,
         reviews: true,
         workflow: true,
       },
@@ -106,13 +106,28 @@ export default {
   computed: {
     isHomePage() {
       return this.$route.path === '/';
-    }
+    },
+    // Вычисляем порядок видимых компонентов
+    visibleComponentsOrder() {
+      const order = [
+        'engineering', 'service', 'repair', 'aerodynamics', 
+        'automation', 'clients', 'reviews', 'workflow'
+      ];
+      
+      return order.filter(key => this.visibility[key]);
+    },
   },
   methods: {
     navigateTo(route) {
       this.$router.push(route);
-    }
-  }
+    },
+    // Метод для определения класса компонента
+    getComponentClass(componentKey) {
+      const index = this.visibleComponentsOrder.indexOf(componentKey);
+      return index % 2 === 0 ? 'landing-component' : 'landing-component-dark';
+    },
+  },
+
 }
 </script>
 

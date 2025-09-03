@@ -1,5 +1,5 @@
 import { createStore } from 'vuex';
-// import auth from './modules/auth';
+import content from './modules/content';
 import websocket from './modules/websocket';
 // import log from './modules/log';
 // import sortParams from './modules/sortParams';
@@ -7,6 +7,7 @@ import websocket from './modules/websocket';
 
 const store = createStore({
   modules: {
+    content,
     websocket,
   },
   actions: {

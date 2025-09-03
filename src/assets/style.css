@@ -126,12 +126,7 @@ body {
 }
 
 /* Компоненты лендинга */
-/* .landing-grid {
-  display: grid;
-  justify-items: stretch;
-  gap: var(--spacing-lg);
-  margin: var(--spacing-xl) 0;
-} */
+
  .landing-grid {
   display: flex;
   flex-direction: column;
@@ -142,13 +137,12 @@ body {
   padding: 0;
 }
 /* Компоненты отображаемые на лендинге AppClients AppReviews и т.д.*/
-.landing-component {
+.landing-component .landing-component-dark {
   cursor: pointer;
   padding: var(--spacing-lg);
   border-radius: 8px;
-  background: linear-gradient(145deg, #2a2a4a, #232340);
   box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-  transition: all 0.3s ease;
+  transition: all 0.5s ease;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -157,13 +151,27 @@ body {
   min-height: auto;
   width: 100%;
 }
-
-.landing-component:hover {
+/* Стиль для четных компонентов */
+.landing-component {
+  background: linear-gradient(145deg, #9393cd, #43436e);
+  width: 100%;
+}
+/* Стиль для нечетных компонентов */
+.landing-component-dark {
+  background: linear-gradient(145deg, #232340, #2a2a4a);
+  width: 100%;
+}
+.landing-component:hover .landing-component-dark:hover{
   transform: translateY(-2px);
   box-shadow: 0 6px 12px rgba(0,0,0,0.3);
-  background: linear-gradient(145deg, #3a3a5a, #323250);
+}
+.landing-component:hover {
+  background: linear-gradient(145deg, #5eb3a1, #154244);
 }
 
+.landing-component-dark:hover {
+  background: linear-gradient(145deg, #323250, #3a3a5a);
+}
 .landing-component h1,
 .landing-component h2,
 .landing-component h3 {
@@ -171,37 +179,101 @@ body {
   text-align: center;
   color: var(--light_font);
 }
-.landing-component-dark {
-  background: linear-gradient(145deg, #2a2a4a, #232340);
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0;
-  box-sizing: border-box;
-  min-height: auto;
-  width: 100%;
-}
 /* Компоненты для подробного описания системы */
-.component-aero{
-  /* cursor: pointer; */
-  padding: var(--spacing-lg);
-  border-radius: 8px;
-  background: linear-gradient(145deg, #2a2a4a, #232340);
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-  transition: all 0.3s ease;
+.loading-spinner, .error-message {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+  color: var(--light_font);
+}
+
+.component-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.component-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.component-header h2 {
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+  color: var(--light_font);
+}
+
+.component-header p {
+  font-size: 1.1rem;
+  color: var(--light_font);
+  opacity: 0.8;
+}
+
+.component-body {
   display: flex;
   align-items: center;
-  justify-content: center;
-  margin: 0;
-  box-sizing: border-box;
-  min-height: auto;
-  width: 100%;
+  justify-content: space-around;
+  margin: 2rem 0;
+  flex-grow: 1;
 }
-.component-automation{
-  width: 100%;
+
+.component-icon {
+  flex: 1;
+  text-align: center;
 }
+
+.component-icon img {
+  max-width: 80px;
+  height: auto;
+}
+
+.info-blocks {
+  flex: 2;
+  display: flex;
+  justify-content: space-around;
+}
+
+.info-block {
+  text-align: center;
+  padding: 0 1rem;
+}
+
+.info-block h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  color: var(--light_font);
+}
+
+.info-block p {
+  color: var(--light_font);
+  opacity: 0.8;
+}
+
+.component-footer {
+  text-align: center;
+  margin-top: auto;
+}
+
+.action-btn {
+  background-color: var(--green);
+  color: white;
+  padding: 0.8rem 2rem;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.action-btn:hover {
+  background-color: #2b9b2b;
+}
+
+
+
+
 /* Кнопка заявки */
 .request-btn {
   background-color: var(--green);
@@ -250,6 +322,18 @@ body {
   margin: 0;
   padding: 0 !important;
     /* padding: var(--spacing-sm); */
+  }
+    .component-body {
+    flex-direction: column;
+  }
+  
+  .info-blocks {
+    flex-direction: column;
+    margin-top: 1.5rem;
+  }
+  
+  .info-block {
+    margin-bottom: 1rem;
   }
 }
 
