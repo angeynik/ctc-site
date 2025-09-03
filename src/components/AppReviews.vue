@@ -1,5 +1,5 @@
 <template>
-    <div class="select-component" @click="navigate">
+    <div class="landing-component" @click="navigate">
         <h1> App reviews </h1>
     </div>
 </template>

@@ -1,5 +1,5 @@
 <template>
-    <div> 
+    <div class="component-automation"> 
         <h3> AutomationService </h3>
     </div>
 </template>

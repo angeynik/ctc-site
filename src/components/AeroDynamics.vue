@@ -1,5 +1,5 @@
 <template>
-    <div> 
+    <div class="component-aero"> 
         <h3> AeroDynamics </h3>
     </div>
 </template>
