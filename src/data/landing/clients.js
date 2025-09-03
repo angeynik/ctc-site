@@ -1,17 +1,24 @@
 export default {
-  title: "Наши Клиенты",
-  subtitle: "Наши Клиенты",
+  title: "Клиенты",
+  subtitle: "Компании которые нам доверяют", 
   icon: "clients",
   infoBlocks: [
     {
-      title: "Наши Клиенты",
-      description: "Наши Клиенты"
+      type: "client",
+      name: "АльтерСолюшнс",
+      description: "Крупнейшая сеть гипермаркетов",
+      icon: "altersolutions",
+      link: "https://example.com"
     },
     {
-      title: "Наши Клиенты",
-      description: "Наши Клиенты"
+      type: "client", 
+      name: "Айрон",
+      description: "Надежный застройщик",
+      icon: "airon",
+      link: "https://airon.ru/"
     }
+    // ... остальные клиенты
   ],
-  buttonText: "Заказать проект",
+  buttonText: "Стать клиентом",
   buttonAction: "/clients"
 };

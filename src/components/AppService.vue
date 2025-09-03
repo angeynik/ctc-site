@@ -21,8 +21,8 @@
             :key="index" 
             class="info-block"
           >
-            <h3>{{ block.title }}</h3>
-            <p>{{ block.description }}</p>
+            <h3 v-if="block.title">{{ block.title }}</h3>
+            <ContentRenderer :content="block.content || convertLegacyContent(block)" />
           </div>
         </div>
       </div>
@@ -41,19 +41,18 @@
 </template>
 
 <script>
-import { useStore } from 'vuex';
+import ContentRenderer from './ContentRenderer.vue';
 
 export default {
   name: 'AppService',
+  components: {
+    ContentRenderer
+  },
   props: {
     componentClass: {
       type: String,
       default: 'landing-component'
     }
-  },
-  setup() {
-    const store = useStore();
-    return { store };
   },
   data() {
     return {
@@ -72,13 +71,24 @@ export default {
     },
     getIconUrl(iconName) {
       return `/icons/${iconName}.svg`;
+    },
+    convertLegacyContent(block) {
+      if (block.description) {
+        return [
+          {
+            type: "paragraph",
+            text: block.description
+          }
+        ];
+      }
+      return [];
     }
   },
   async mounted() {
     this.loading = true;
     console.log('[AppService] - Mounted - Попытка загрузки контента');
     try {
-      this.content = await this.store.dispatch('content/fetchContent', {
+      this.content = await this.$store.dispatch('content/fetchContent', {
         contentType: 'landingContent',
         componentKey: 'service'
       });

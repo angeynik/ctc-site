@@ -1,17 +1,17 @@
 export default {
   title: "Отзывы",
   subtitle: "Отзывы о наших работах",
-  icon: "reviews",
+  icon: "reviews", 
   infoBlocks: [
     {
-      title: "Отзывы",
-      description: "Разработка проектной документации для инженерных систем"
-    },
-    {
-      title: "Отзывы",
-      description: "Качественный монтаж с соблюдением всех стандартов"
+      type: "review",
+      company: "Айрон",
+      text: "Компания зарекомендовала себя как надежный и качественный партнер",
+      icon: "airon",
+      link: "https://airon.ru/",
+      document: "https://airon.ru/docs/airon.pdf"
     }
   ],
-  buttonText: "Заказать проект",
-  buttonAction: "/rewiews"
+  buttonText: "Оставить отзыв",
+  buttonAction: "/reviews"
 };

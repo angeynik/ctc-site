@@ -21,8 +21,8 @@
             :key="index" 
             class="info-block"
           >
-            <h3>{{ block.title }}</h3>
-            <p>{{ block.description }}</p>
+            <h3 v-if="block.title">{{ block.title }}</h3>
+            <ContentRenderer :content="block.content || convertLegacyContent(block)" />
           </div>
         </div>
       </div>
@@ -41,8 +41,13 @@
 </template>
 
 <script>
+import ContentRenderer from './ContentRenderer.vue';
+
 export default {
   name: 'AppEngineeringSystems',
+  components: {
+    ContentRenderer
+  },
   props: {
     componentClass: {
       type: String,
@@ -66,6 +71,19 @@ export default {
     },
     getIconUrl(iconName) {
       return `/icons/${iconName}.svg`;
+    },
+    // Метод для конвертации старой структуры в новую
+    convertLegacyContent(block) {
+      if (block.description) {
+        // Если есть описание, преобразуем его в параграф
+        return [
+          {
+            type: "paragraph",
+            text: block.description
+          }
+        ];
+      }
+      return [];
     }
   },
   async mounted() {
