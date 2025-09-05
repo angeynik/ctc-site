@@ -6,8 +6,8 @@
     
     <div v-else-if="content" class="component-content">
       <div class="component-header">
-        <h2>{{ content.title }}</h2>
-        <p>{{ content.subtitle }}</p>
+        <div class="component-header__title">{{ content.title }}</div>
+        <div class="component-header__description">{{ content.subtitle }}</div>
       </div>
       
       <div class="component-body">

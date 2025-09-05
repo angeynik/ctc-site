@@ -52,40 +52,4 @@ export default {
 }
 </script>
 
-<style scoped>
-/* Стили для клиентов и отзывов */
-.client-item, .review-item {
-  display: flex;
-  align-items: center;
-  margin: 1rem 0;
-  padding: 1rem;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
-}
-
-.client-icon, .review-icon {
-  width: 50px;
-  height: 50px;
-  margin-right: 1rem;
-  object-fit: contain;
-}
-
-.client-info h4, .review-info h4 {
-  margin: 0 0 0.5rem 0;
-  color: var(--light_font);
-}
-
-.client-link, .review-link {
-  color: var(--green);
-  text-decoration: none;
-  margin-right: 1rem;
-}
-
-.client-link:hover, .review-link:hover {
-  text-decoration: underline;
-}
-
-.review-links {
-  margin-top: 0.5rem;
-}
-</style>
+<style lang="css" src="@/assets/content.css"> </style>

@@ -1,48 +1,26 @@
 /* Создание переменных  */
 :root {
   --light_font: #E0DFE7;
-  --dark_font: #1E1E31;
-  --header_color: #4D576C;
-  --background_color: #1E1E31;
-  --orange: #F97B00;
-  --yellow: #F8B01E;
-  --violet: #5077f5;
+  --dark_font: #6e6e6e;
+  --header_color: #424245;
+  --background_color: #F5F5F7;
+  --background_light: #afe1fe;
+  --background_dark: #6e6e6e;
+  --orange: #FF911B;
+  --blue: #0271E3;
   --green: #34B534;
   --red: #F91E00;
+  --button: #F0F0F0;
+  --button_hover: #E0E0E0;
+  --button_active: #0271E3;
+  --button_disabled: #C0C0C0;
+  --button_stroke: #0271E3;
 
   --sensor-green: #cfeecf;
   --sensor-yellow: #ffe5cc;
   --sensor-red: #fdbbb2;
   --sensor-gray: #808080;
-}
-.html {
-  font-size: 18px; /* Теперь 1rem = 18px */
-  height: 100%; 
-  margin: 0; 
-  padding: 0; 
-  background-color: var(--background_color);
-  background: var(--background_color);
-}
-
-
-/* Создание переменных */
-:root {
-  --light_font: #E0DFE7;
-  --dark_font: #1E1E31;
-  --header_color: #4D576C;
-  --background_color: #1E1E31;
-  --orange: #F97B00;
-  --yellow: #F8B01E;
-  --violet: #5077f5;
-  --green: #34B534;
-  --red: #F91E00;
-
-  --sensor-green: #cfeecf;
-  --sensor-yellow: #ffe5cc;
-  --sensor-red: #fdbbb2;
-  --sensor-gray: #808080;
-
-  /* Размеры шрифтов для разных устройств */
+    /* Размеры шрифтов для разных устройств */
   --font-size-xs: 12px;
   --font-size-sm: 14px;
   --font-size-base: 16px;
@@ -60,14 +38,15 @@
   --spacing-xl: 2rem;
   --spacing-2xl: 3rem;
 }
-
-/* Базовые стили для всех устройств */
-html {
-  font-size: var(--font-size-base);
-  height: 100%;
-  margin: 0;
-  padding: 0;
+.html {
+  /* font-size: 18px;  */
+  /* Теперь 1rem = 18px */
+  height: 100%; 
+  margin: 0; 
+  padding: 0; 
   background-color: var(--background_color);
+  background: var(--background_color);
+  font-size: var(--font-size-base);
 }
 
 body {
@@ -115,6 +94,7 @@ body {
   margin: 0;
   padding: 0 !important;
   align-content: flex-start;
+  width: 100%;
 }
 
 /* Footer стили */
@@ -153,12 +133,15 @@ body {
 }
 /* Стиль для четных компонентов */
 .landing-component {
-  background: linear-gradient(145deg, #9393cd, #43436e);
+  /* background: linear-gradient(145deg, #9393cd, #43436e); */
+  background: var(--background_light);
+  color: var(--dark_font);
   width: 100%;
 }
 /* Стиль для нечетных компонентов */
 .landing-component-dark {
-  background: linear-gradient(145deg, #232340, #2a2a4a);
+  background: var(--background_dark);
+  color: var(--light_font);
   width: 100%;
 }
 .landing-component:hover .landing-component-dark:hover{
@@ -188,17 +171,72 @@ body {
   color: var(--light_font);
 }
 
+/* Контейнер для компонента Стили для рендоринга контента внутри компонентов в component.css */
 .component-content {
   display: flex;
   flex-direction: column;
   height: 100%;
 }
-
+/* Header компонента  */
+/* Базовые стили для component-header */
 .component-header {
+  display: flex;
+  /* margin-bottom: 0.5rem; */
+  padding: 1rem 0 1rem 0;
+  width: 100%;
+  align-items: center;
+}
+/* Общие стили для заголовка и описания */
+.component-header__title,
+.component-header__description {
+  align-content: left;
+
+  /* flex-shrink: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; */
+}
+/* Стили для заголовка */
+.component-header__title {
+  font-weight: bold;
+  font-size: clamp(16px, 3.4vw, 24px);
+  min-width: min(25%, 20vw);
   text-align: center;
-  margin-bottom: 1.5rem;
+  padding: 0.2rem 1rem;
 }
 
+/* Стили для описания */
+.component-header__description {
+  font-size: clamp(14px, 2.2vw, 18px);
+  min-width: min(75%, 60vw);
+  text-align: left;
+  padding: 0 1rem;
+}
+
+/* Светлый вариант (landing-component) - описание сначала */
+.landing-component .component-header {
+  flex-direction: row-reverse;
+}
+.landing-component .component-header__title {
+  text-align: center;
+}
+
+.landing-component .component-header__description {
+  text-align: left;
+}
+
+/* Темный вариант (landing-component-dark) - заголовок сначала */
+.landing-component-dark .component-header {
+  flex-direction: row;
+}
+
+.landing-component-dark .component-header__title {
+  text-align: center;
+}
+
+.landing-component-dark .component-header__description {
+  text-align: left;
+}
 .component-header h2 {
   font-size: 1.8rem;
   margin-bottom: 0.5rem;
@@ -335,6 +373,28 @@ body {
   .info-block {
     margin-bottom: 1rem;
   }
+  /* Заголовок компонента для мобильных (вертикальный экран) */
+  .component-header {
+    flex-direction: column !important;
+    align-items: center;
+    padding: 0.2rem 0 1rem 0;
+  }
+  
+  .component-header__title,
+  .component-header__description {
+    width: 100% !important;
+    min-width: 100% !important;
+    text-align: center !important;
+    white-space: normal;
+  }
+ .component-header__title{
+      margin-bottom: 0.8rem;
+ }
+  .component-header__description {
+    text-align: left !important;
+    padding-left: 4rem !important;
+    margin-bottom: 0.2rem;
+  }
 }
 
 /* Планшеты (769px - 1024px) */
@@ -355,6 +415,29 @@ body {
   .landing-component {
     min-height: 140px;
   }
+   /* Заголовок компонента для мобильных (вертикальный экран) */
+    .component-header__title {
+    min-width: min(30%, 25vw);
+    font-size: clamp(18px, 2.6vw, 22px);
+  }
+  
+  .component-header__description {
+    min-width: min(70%, 55vw);
+    font-size: clamp(18px, 2.2vw, 24px);
+  }
+}
+
+/* Адаптация текста для очень маленьких экранов */
+@media (max-width: 480px) {
+  .component-header__title {
+    font-size: 16px;
+  }
+  
+  .component-header__description {
+    font-size: 16px;
+    line-height: 1.4;
+  }
+
 }
 
 /* ПК (1025px и выше) */
@@ -370,7 +453,6 @@ body {
 
   .landing-grid {
     grid-template-columns: repeat(3, 1fr);
-    max-width: 1200px;
     margin: var(--spacing-xs) auto;
   }
 
@@ -389,7 +471,6 @@ body {
 @media (min-width: 1440px) {
   .landing-grid {
     grid-template-columns: repeat(4, 1fr);
-    max-width: 1400px;
   }
 }
 
