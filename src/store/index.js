@@ -1,6 +1,7 @@
 import { createStore } from 'vuex';
 import content from './modules/content';
 import websocket from './modules/websocket';
+import icons from './modules/icons'; // Добавляем модуль иконок
 // import log from './modules/log';
 // import sortParams from './modules/sortParams';
 // import config from './modules/config';
@@ -9,6 +10,7 @@ const store = createStore({
   modules: {
     content,
     websocket,
+    icons,
   },
   actions: {
     toLowerCase(_, str) {

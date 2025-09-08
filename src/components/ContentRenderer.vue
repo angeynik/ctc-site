@@ -12,7 +12,12 @@
       
       <!-- Специальные типы для конкретных компонентов -->
       <div v-if="item.type === 'client'" class="client-item">
-        <img :src="getIconUrl(item.icon)" :alt="item.name" class="client-icon">
+        <img 
+          :src="getIconUrl(item.icon)" 
+          :alt="item.name" 
+          class="client-icon"
+          @error="handleIconError"
+        >
         <div class="client-info">
           <h4>{{ item.name }}</h4>
           <p>{{ item.description }}</p>
@@ -21,7 +26,12 @@
       </div>
       
       <div v-if="item.type === 'review'" class="review-item">
-        <img :src="getIconUrl(item.icon)" :alt="item.company" class="review-icon">
+        <img 
+          :src="getIconUrl(item.icon)" 
+          :alt="item.name" 
+          class="client-icon"
+          @error="handleIconError"
+        >
         <div class="review-info">
           <h4>{{ item.company }}</h4>
           <p>{{ item.text }}</p>
@@ -36,6 +46,8 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex';
+
 export default {
   name: 'ContentRenderer',
   props: {
@@ -44,10 +56,11 @@ export default {
       required: true
     }
   },
+  computed: {
+    ...mapGetters('icons', ['getIconUrl']),
+  },
   methods: {
-    getIconUrl(iconName) {
-      return `/icons/${iconName}.svg`;
-    }
+  ...mapActions('icons', ['handleIconError']),
   }
 }
 </script>

@@ -6,13 +6,17 @@
     
     <div v-else-if="content" class="component-content">
       <div class="component-header">
-        <h2>{{ content.title }}</h2>
-        <p>{{ content.subtitle }}</p>
+        <div class="component-header__title">{{ content.title }}</div>
+        <div class="component-header__description">{{ content.subtitle }}</div>
       </div>
       
       <div class="component-body">
         <div class="component-icon">
-          <img :src="getIconUrl(content.icon)" :alt="content.title">
+            <img 
+              :src="iconUrl" 
+              :alt="content.title" 
+              @error="handleIconError"
+            >
         </div>
         
         <div class="info-blocks">
@@ -42,7 +46,7 @@
 
 <script>
 import ContentRenderer from './ContentRenderer.vue';
-
+import { mapGetters, mapActions } from 'vuex';
 export default {
   name: 'AppAerodynamics',
   components: {
@@ -60,7 +64,14 @@ export default {
       loading: false
     };
   },
+  computed: {
+    ...mapGetters('icons', ['getIconUrl']),
+    iconUrl() {
+      return this.content ? this.getIconUrl(this.content.icon) : '';
+    }
+  },
   methods: {
+    ...mapActions('icons', ['handleIconError']),
     navigate() {
       this.$emit('navigate');
     },
@@ -68,9 +79,6 @@ export default {
       if (this.content && this.content.buttonAction) {
         this.$router.push(this.content.buttonAction);
       }
-    },
-    getIconUrl(iconName) {
-      return `/icons/${iconName}.svg`;
     },
     convertLegacyContent(block) {
       if (block.description) {

@@ -12,9 +12,13 @@
       
       <div class="component-body">
         <div class="component-icon">
-          <img :src="getIconUrl(content.icon)" :alt="content.title">
+            <img 
+              :src="iconUrl" 
+              :alt="content.title" 
+              @error="handleIconError"
+            >
         </div>
-        
+       
         <div class="info-blocks">
           <div 
             v-for="(block, index) in content.infoBlocks" 
@@ -42,6 +46,7 @@
 
 <script>
 import ContentRenderer from './ContentRenderer.vue';
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
   name: 'AppEngineeringSystems',
@@ -60,7 +65,14 @@ export default {
       loading: false
     };
   },
+    computed: {
+    ...mapGetters('icons', ['getIconUrl']),
+    iconUrl() {
+      return this.content ? this.getIconUrl(this.content.icon) : '';
+    }
+  },
   methods: {
+    ...mapActions('icons', ['handleIconError']),
     navigate() {
       this.$emit('navigate');
     },
@@ -69,9 +81,27 @@ export default {
         this.$router.push(this.content.buttonAction);
       }
     },
-    getIconUrl(iconName) {
-      return `/icons/${iconName}.svg`;
-    },
+    // getIconUrl(iconName) {
+    //   // Проверяем, содержит ли имя иконки уже расширение
+    //   const hasExtension = iconName.includes('.');
+      
+    //   if (hasExtension) {
+    //     return `/icons/${iconName}`;
+    //   } else {
+    //     // Пробуем сначала загрузить SVG, если нет - PNG
+    //     return `/icons/${iconName}.svg`;
+    //   }
+    // },
+    //   handleIconError(event) {
+    //   const img = event.target;
+    //   const src = img.src;
+      
+    //   // Если не загрузилась svg, пробуем png
+    //   if (src.endsWith('.svg')) {
+    //     img.src = src.replace('.svg', '.png');
+    //     img.onerror = null; // Сбрасываем обработчик чтобы избежать цикла
+    //   }
+    // },
     // Метод для конвертации старой структуры в новую
     convertLegacyContent(block) {
       if (block.description) {
