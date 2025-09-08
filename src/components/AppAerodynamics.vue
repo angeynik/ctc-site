@@ -9,6 +9,7 @@
         <div class="component-header__title">{{ content.title }}</div>
         <div class="component-header__description">{{ content.subtitle }}</div>
       </div>
+      <div class="header-divider"></div>
       
       <div class="component-body">
         <div class="component-icon">

@@ -190,11 +190,6 @@ body {
 .component-header__title,
 .component-header__description {
   align-content: left;
-
-  /* flex-shrink: 0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis; */
 }
 /* Стили для заголовка */
 .component-header__title {
@@ -207,10 +202,14 @@ body {
 
 /* Стили для описания */
 .component-header__description {
-  font-size: clamp(14px, 2.2vw, 18px);
-  min-width: min(75%, 60vw);
+  font-size: clamp(12px, 1.8vw, 16px);
+  min-width: min(80%, 60vw);
   text-align: left;
-  padding: 0 1rem;
+  padding: 0 0.5rem; /* Добавляем отступ с обеих сторон */
+  box-sizing: border-box; /* Чтобы padding включался в ширину */
+  max-width: 100%; /* Ограничиваем максимальную ширину */
+  word-wrap: break-word; /* Перенос длинных слов */
+  overflow-wrap: break-word; /* Альтернативный вариант для переноса */
 }
 
 /* Светлый вариант (landing-component) - описание сначала */
@@ -248,7 +247,26 @@ body {
   color: var(--light_font);
   opacity: 0.8;
 }
+/* Разделительная линия между header и body */
+.header-divider {
+  width: 94%;
+  height: 2px;
+  transition: all 0.4s ease;
+  margin: 0 auto; /* Центрирование по горизонтали */
+  display: block; /* Делаем блочным элементом */
+}
 
+/* Для светлых компонентов (четных) - темная линия */
+.landing-component .header-divider {
+  background-color: var(--background_dark);
+}
+
+/* Для темных компонентов (нечетных) - светлая линия */
+.landing-component-dark .header-divider {
+  background-color: var(--background_light);
+}
+
+/* Component Body стили */
 .component-body {
   display: flex;
   align-items: center;
@@ -283,12 +301,36 @@ body {
 .info-block h3 {
   font-size: 1.2rem;
   margin-bottom: 0.5rem;
-  color: var(--light_font);
 }
 
 .info-block p {
-  color: var(--light_font);
   opacity: 0.8;
+}
+
+/* Светлый вариант (landing-component) - информационные блоки сначала */
+.landing-component .component-body {
+  flex-direction: row-reverse;
+}
+
+.landing-component .info-block h3 {
+  color: var(--dark_font);
+}
+
+.landing-component .info-block p {
+  color: var(--dark_font);
+}
+
+/* Темный вариант (landing-component-dark) - иконка сначала */
+.landing-component-dark .component-body {
+  flex-direction: row;
+}
+
+.landing-component-dark .info-block h3 {
+  color: var(--light_font);
+}
+
+.landing-component-dark .info-block p {
+  color: var(--light_font);
 }
 
 .component-footer {
@@ -363,7 +405,7 @@ body {
   padding: 0 !important;
     /* padding: var(--spacing-sm); */
   }
-    .component-body {
+  .component-body {
     flex-direction: column !important;
   }
   
@@ -374,7 +416,20 @@ body {
   
   .info-block {
     margin-bottom: 1rem;
+    text-align: center;
   }
+  
+  /* На мобильных цвет текста должен соответствовать фону компонента */
+  .landing-component .info-block h3,
+  .landing-component .info-block p {
+    color: var(--dark_font);
+  }
+  
+  .landing-component-dark .info-block h3,
+  .landing-component-dark .info-block p {
+    color: var(--light_font);
+  }
+
   /* Заголовок компонента для мобильных (вертикальный экран) */
   .component-header {
     flex-direction: column !important;
@@ -394,7 +449,7 @@ body {
  }
   .component-header__description {
     text-align: left !important;
-    padding-left: 4rem !important;
+    padding-left: 1rem !important;
     margin-bottom: 0.2rem;
   }
 }
@@ -424,8 +479,19 @@ body {
   }
   
   .component-header__description {
-    min-width: min(70%, 55vw);
-    font-size: clamp(18px, 2.2vw, 24px);
+    min-width: min(75%, 60vw);
+    font-size: clamp(14px, 2vw, 18px);
+  }
+    .component-icon img {
+    max-width: 180px;
+  }
+  
+  .info-block {
+    padding: 0 0.5rem;
+  }
+  
+  .info-block h3 {
+    font-size: 1.1rem;
   }
 }
 
@@ -439,7 +505,6 @@ body {
     font-size: 16px;
     line-height: 1.4;
   }
-
 }
 
 /* ПК (1025px и выше) */
@@ -467,12 +532,27 @@ body {
   padding: 0 !important;
     /* padding: var(--spacing-lg); */
   }
+    .component-icon img {
+    max-width: 240px;
+  }
+  
+  .info-block h3 {
+    font-size: 1.2rem;
+  }
+  
 }
 
 /* Особо большие экраны (1440px и выше) */
 @media (min-width: 1440px) {
   .landing-grid {
     grid-template-columns: repeat(4, 1fr);
+  }
+  .component-icon img {
+    max-width: 340px;
+  }
+  
+  .info-block h3 {
+    font-size: 1.5rem;
   }
 }
 
