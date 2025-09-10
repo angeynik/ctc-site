@@ -70,6 +70,7 @@ body {
 
 /* Header стили */
 .app-header {
+  width: inherit;
   background-color: var(--header_color);
   padding: var(--spacing-md);
   position: sticky;
@@ -80,12 +81,31 @@ body {
   align-items: center;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
-
-.app-header h1 {
-  margin: 0;
-  font-size: var(--font-size-xl);
-  color: var(--light_font);
+.header-icon {
+  /* height: 40%; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
+}
+.header-icon img {
+  width: 100%;
+  height: auto;
+  max-height: 30px; /* Ограничиваем высоту логотипа */
+}
+
+.header-title {
+  flex: 1;
+  text-align: center;
+}
+
+.header-title h1 {
+  margin: 0;
+  font-size: clamp(20px, 3.6vw, 24px);
+  color: var(--text-color);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* Main content area */
@@ -198,18 +218,18 @@ body {
 /* Стили для заголовка */
 .component-header__title {
   font-weight: bold;
-  font-size: clamp(16px, 3.4vw, 24px);
-  min-width: min(25%, 20vw);
+  font-size: clamp(22px, 2.3vw, 28px);
+  min-width: min(30%, 28vw);
   text-align: center;
   padding: 0.2rem 1rem;
 }
 
 /* Стили для описания */
 .component-header__description {
-  font-size: clamp(12px, 1.8vw, 16px);
-  min-width: min(80%, 60vw);
+  font-size: clamp(16px, 1.6vw, 22px);
+  min-width: min(75%, 55vw);
   text-align: left;
-  padding: 0 0.5rem; /* Добавляем отступ с обеих сторон */
+  padding: 0 1.4rem; /* Добавляем отступ с обеих сторон */
   box-sizing: border-box; /* Чтобы padding включался в ширину */
   max-width: 100%; /* Ограничиваем максимальную ширину */
   word-wrap: break-word; /* Перенос длинных слов */
@@ -253,7 +273,7 @@ body {
 }
 /* Разделительная линия между header и body */
 .header-divider {
-  width: 94%;
+  width: 96%;
   height: 2px;
   transition: all 0.4s ease;
   margin: 0 auto; /* Центрирование по горизонтали */
@@ -273,7 +293,7 @@ body {
 /* Component Body стили */
 .component-body {
   display: flex;
-  align-items: center;
+  /* align-items: center; */
   justify-content: space-around;
   margin: 2rem 0;
   flex-grow: 1;
@@ -285,7 +305,7 @@ body {
 }
 
 .component-icon img {
-  max-width: 240px;
+  max-width: 160px;
   height: auto;
 }
 
@@ -296,10 +316,17 @@ body {
   justify-content: space-around;
 }
 
+
 .info-block {
   text-align: left;
   flex: 1;
-  padding: 0 1rem;
+}
+
+.landing-component .info-block {
+  padding: 0 2.4rem;
+}
+.landing-component-dark .info-block {
+  padding: 0 0.8rem;
 }
 
 .info-block h3 {
@@ -420,7 +447,7 @@ body {
   
   .info-block {
     margin-bottom: 1rem;
-    text-align: center;
+    /* text-align: center; */
   }
   
   /* На мобильных цвет текста должен соответствовать фону компонента */
@@ -433,7 +460,12 @@ body {
   .landing-component-dark .info-block p {
     color: var(--light_font);
   }
-
+  .landing-component .info-block {
+    padding: 0 1.6rem;
+  }
+  .landing-component-dark .info-block {
+    padding: 0 1.6rem;
+  }
   /* Заголовок компонента для мобильных (вертикальный экран) */
   .component-header {
     flex-direction: column !important;
@@ -450,11 +482,17 @@ body {
   }
  .component-header__title{
       margin-bottom: 0.8rem;
+      font-size: clamp(28px, 3.8vw, 36px);
  }
   .component-header__description {
+    font-size: clamp(16px, 2.3vw, 20px);
     text-align: left !important;
-    padding-left: 1rem !important;
+    padding-left: 1.6rem !important;
     margin-bottom: 0.2rem;
+  }
+  .component-icon img{
+    max-width: 140px;
+    height: auto;
   }
 }
 
@@ -476,16 +514,11 @@ body {
   .landing-component {
     min-height: 140px;
   }
-   /* Заголовок компонента для мобильных (вертикальный экран) */
-    .component-header__title {
-    min-width: min(30%, 25vw);
-    font-size: clamp(18px, 2.6vw, 22px);
-  }
   
-  .component-header__description {
+  /* .component-header__description {
     min-width: min(75%, 60vw);
     font-size: clamp(14px, 2vw, 18px);
-  }
+  } */
     .component-icon img {
     max-width: 180px;
   }
@@ -496,18 +529,6 @@ body {
   
   .info-block h3 {
     font-size: 1.1rem;
-  }
-}
-
-/* Адаптация текста для очень маленьких экранов */
-@media (max-width: 480px) {
-  .component-header__title {
-    font-size: 16px;
-  }
-  
-  .component-header__description {
-    font-size: 16px;
-    line-height: 1.4;
   }
 }
 
@@ -537,13 +558,16 @@ body {
     /* padding: var(--spacing-lg); */
   }
     .component-icon img {
-    max-width: 240px;
+    max-width: 200px;
   }
   
   .info-block h3 {
     font-size: 1.2rem;
   }
-  
+  /* .component-header__description {
+    padding-left: 2.2rem !important;
+    margin-bottom: 0.2rem;
+  } */
 }
 
 /* Особо большие экраны (1440px и выше) */
@@ -552,7 +576,7 @@ body {
     grid-template-columns: repeat(4, 1fr);
   }
   .component-icon img {
-    max-width: 340px;
+    max-width: 240px;
   }
   
   .info-block h3 {

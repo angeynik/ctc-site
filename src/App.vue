@@ -91,14 +91,14 @@ export default {
   data() {
     return {
       visibility: {
-        engineering: true,
+        engineering: false,
         service: true,
         repair: true,
         aerodynamics: true,
         automation: false,
         clients: false,
-        reviews: true,
-        workflow: true,
+        reviews: false,
+        workflow: false,
       },
       showRequestForm: false
     }
