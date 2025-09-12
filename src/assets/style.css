@@ -418,7 +418,6 @@ body {
 
   .app-header {
     padding: var(--spacing-sm);
-    flex-direction: column;
     gap: var(--spacing-sm);
   }
 
@@ -727,6 +726,60 @@ body {
   margin-bottom: 20px;
 }
 
+
+.phone-input-container {
+  display: flex;
+  width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  overflow: hidden;
+  background: white;
+}
+
+.country-select {
+  width: 15%;
+  min-width: 60px;
+  border: none;
+  border-right: 1px solid #ddd;
+  padding: 10px;
+  background: #f8f9fa;
+  font-size: 14px;
+  outline: none;
+  cursor: pointer;
+}
+
+.phone-input {
+  flex: 1;
+  border: none;
+  padding: 10px;
+  font-size: 14px;
+  outline: none;
+}
+
+/* Стили для фокуса */
+.phone-input-container:focus-within {
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+
+
+
+
+.form-phone-group {
+  display: flex;
+  gap: 15px;
+  align-items: flex-end;
+}
+.country-group {
+  width: 10%;
+  height: inherit;
+  flex: 1;
+  min-width: 120px;
+}
+.phone-group {
+  flex: 2;
+}
 label {
   display: block;
   margin-bottom: 5px;

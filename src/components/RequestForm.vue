@@ -4,7 +4,7 @@
       <button class="close-btn" @click="close">×</button>
       
       <div v-if="!isSubmitted">
-        <h2>Заполните форму</h2>
+        <h2>Заявка на консультацию</h2>
         <form @submit.prevent="submitForm">
           <div class="form-group">
             <label for="name">Имя:</label>
@@ -19,14 +19,27 @@
           
           <div class="form-group">
             <label for="phone">Телефон:</label>
-            <input 
-              id="phone" 
-              v-model="formData.phone" 
-              type="tel" 
-              required 
-              placeholder="+7 (XXX) XXX-XX-XX"
-            >
+            <div class="phone-input-container">
+              <select id="country" v-model="formData.country" @change="updatePlaceholder" class="country-select">
+                <option value="by">By</option>
+                <option value="ru">Ru</option>
+                <option value="other">Other</option>
+              </select>
+              <input 
+                id="phone" 
+                v-model="formData.phone" 
+                type="tel" 
+                required 
+                :placeholder="phonePlaceholder"
+                class="phone-input"
+              >
+            </div>
+            <!-- <small class="format-hint" v-if="formData.country">
+              Формат: {{ phonePlaceholder }}
+            </small> -->
           </div>
+
+
           
           <div class="form-group">
             <label for="email">Email:</label>
@@ -93,6 +106,7 @@ export default {
       formData: {
         name: '',
         phone: '',
+        country: 'by',
         email: '',
         interests: [],
         message: ''
@@ -117,7 +131,25 @@ export default {
       }
     }
   },
+    computed: {
+    phonePlaceholder() {
+      switch (this.formData.country) {
+        case 'ru':
+          return '+7 (XXX) XXX-XX-XX';
+        case 'by':
+          return '+375 (XX) XXX-XX-XX';
+        case 'other':
+          return 'Введите международный номер';
+        default:
+          return 'Сначала выберите страну';
+      }
+    }
+  },
   methods: {
+    updatePlaceholder() {
+      // Очищаем поле при смене страны (опционально)
+      this.formData.phone = '';
+    },
     submitForm() {
       this.isSubmitting = true;
       

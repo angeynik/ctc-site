@@ -33,7 +33,7 @@
       </div>
       
       <div class="component-footer">
-        <button class="action-btn" @click.stop="navigateTo">
+        <button class="action-btn" @click.stop="handleButtonClick">
           {{ content.buttonText }}
         </button>
       </div>
@@ -75,34 +75,12 @@ export default {
   methods: {
     ...mapActions('icons', ['handleIconError']),
     navigate() {
+      // Не срабатывает при клике на кнопку благодаря @click.stop
       this.$emit('navigate');
     },
-    navigateTo() {
-      if (this.content && this.content.buttonAction) {
-        this.$router.push(this.content.buttonAction);
-      }
+    handleButtonClick() {
+      this.$emit('request-form');
     },
-    // getIconUrl(iconName) {
-    //   // Проверяем, содержит ли имя иконки уже расширение
-    //   const hasExtension = iconName.includes('.');
-      
-    //   if (hasExtension) {
-    //     return `/icons/${iconName}`;
-    //   } else {
-    //     // Пробуем сначала загрузить SVG, если нет - PNG
-    //     return `/icons/${iconName}.svg`;
-    //   }
-    // },
-    //   handleIconError(event) {
-    //   const img = event.target;
-    //   const src = img.src;
-      
-    //   // Если не загрузилась svg, пробуем png
-    //   if (src.endsWith('.svg')) {
-    //     img.src = src.replace('.svg', '.png');
-    //     img.onerror = null; // Сбрасываем обработчик чтобы избежать цикла
-    //   }
-    // },
     // Метод для конвертации старой структуры в новую
     convertLegacyContent(block) {
       if (block.description) {

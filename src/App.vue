@@ -8,41 +8,55 @@
         <AppEngineeringSystems 
           v-if="visibility.engineering"
           @navigate="navigateTo('/engineering')"
+          @request-form="showRequestForm = true"
+          :class="getComponentClass('engineering')"
+        />
+        <AppEngineeringSystems 
+          v-if="visibility.engineering"
+          @navigate="navigateTo('/engineering')"
+          @request-form="showRequestForm = true"
           :class="getComponentClass('engineering')"
         />
         <AppService 
           v-if="visibility.service"
           @navigate="navigateTo('/service')"
+          @request-form="showRequestForm = true"
           :class="getComponentClass('service')"
         />
         <AppRepair 
           v-if="visibility.repair"
           @navigate="navigateTo('/repair')"
+          @request-form="showRequestForm = true"
           :class="getComponentClass('repair')"
         />
         <AppAerodynamics 
           v-if="visibility.aerodynamics"
           @navigate="navigateTo('/aero')"
+          @request-form="showRequestForm = true"
           :class="getComponentClass('aerodynamics')"
         />
         <AppAutomation 
           v-if="visibility.automation"
           @navigate="navigateTo('/automation')"
+          @request-form="showRequestForm = true"
           :class="getComponentClass('automation')"
         />
         <AppClients 
           v-if="visibility.clients"
           @navigate="navigateTo('/clients')"
+          @request-form="showRequestForm = true"
           :class="getComponentClass('clients')"
         />
         <AppReviews 
           v-if="visibility.reviews"
           @navigate="navigateTo('/reviews')"
+          @request-form="showRequestForm = true"
           :class="getComponentClass('reviews')"
         />
         <AppWorkflow 
           v-if="visibility.workflow"
           @navigate="navigateTo('/workflow')"
+          @request-form="showRequestForm = true"
           :class="getComponentClass('workflow')"
         />
       </div>

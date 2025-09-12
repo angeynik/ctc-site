@@ -33,7 +33,7 @@
       </div>
       
       <div class="component-footer">
-        <button class="action-btn" @click.stop="navigateTo">
+        <button class="action-btn" @click.stop="handleButtonClick">
           {{ content.buttonText }}
         </button>
       </div>
@@ -75,16 +75,12 @@ export default {
   methods: {
     ...mapActions('icons', ['handleIconError']),
     navigate() {
+      // Не срабатывает при клике на кнопку благодаря @click.stop
       this.$emit('navigate');
     },
-    navigateTo() {
-      if (this.content && this.content.buttonAction) {
-        this.$router.push(this.content.buttonAction);
-      }
+    handleButtonClick() {
+      this.$emit('request-form');
     },
-    // getIconUrl(iconName) {
-    //   return `/icons/${iconName}.svg`;
-    // },
     convertLegacyContent(block) {
       if (block.description) {
         return [
