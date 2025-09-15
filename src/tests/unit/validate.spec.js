@@ -1,5 +1,5 @@
 // tests/validate.test.js
-import { validatePhone, validateEmail } from '@/store/modules/validate';
+import { validatePhone, validateEmail } from '../../store/modules/validate.js';
 
 describe('validatePhone', () => {
   describe('RU region', () => {
