@@ -10,6 +10,7 @@
   --background_dark_hover: #608ba4;
   --orange: #FF911B;
   --blue: #0271E3;
+  --dark_blue: #00458a;
   --green: #34B534;
   --red: #F91E00;
   --button: #F0F0F0;
@@ -170,15 +171,13 @@ body {
   transform: translateY(-2px);
   box-shadow: 0 6px 12px rgba(0,0,0,0.3);
 }
-.landing-component:hover {
-  /* background: linear-gradient(145deg, #5eb3a1, #154244); */
+/* .landing-component:hover {
   background: var(--background_light_hover);
 }
-
 .landing-component-dark:hover {
-  /* background: linear-gradient(145deg, #323250, #3a3a5a); */
   background: var(--background_dark_hover);
-}
+} */
+
 .landing-component h1,
 .landing-component h2,
 .landing-component h3 {
@@ -363,29 +362,27 @@ body {
 .landing-component-dark .info-block p {
   color: var(--light_font);
 }
-
 .component-footer {
   text-align: center;
   margin-top: auto;
+  padding: 0.6rem 0 1.4rem 0;
 }
-
 .action-btn {
-  background-color: var(--green);
+  background-color: var(--blue);
   color: white;
   padding: 0.8rem 2rem;
   border: none;
-  border-radius: 5px;
-  font-size: 1rem;
+  border-radius: 0.6rem;
+  font-size: 1.8rem;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color 0.8s;
 }
-
 .action-btn:hover {
-  background-color: #2b9b2b;
+  background-color: var(--dark_blue);
 }
-
-
-
+.action-btn:active {
+  background-color: var(--orange);
+}
 
 /* Кнопка заявки */
 .request-btn {
@@ -724,6 +721,7 @@ body {
 
 .form-group {
   margin-bottom: 20px;
+  color: var(--dark_font);
 }
 
 
@@ -761,8 +759,38 @@ body {
   border-color: #007bff;
   box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
 }
+/* Стили для сообщений об ошибках */
+.format-error {
+  color: var(--red);
+  font-size: 12px;
+  margin-top: 5px;
+  display: block;
+}
 
+.format-hint {
+  color: #666;
+  font-size: 12px;
+  margin-top: 5px;
+  display: block;
+}
 
+/* Стили для поля ввода с ошибкой */
+.phone-input-container.error {
+  border-color: var(--red);
+  box-shadow: 0 0 0 2px rgba(249, 30, 0, 0.25);
+}
+
+/* Стили для поля ввода при фокусе */
+.phone-input-container:focus-within {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 2px rgba(2, 113, 227, 0.25);
+}
+
+/* Стили для успешного ввода (опционально) */
+.phone-input-container.success {
+  border-color: var(--green);
+  box-shadow: 0 0 0 2px rgba(52, 181, 52, 0.25);
+}
 
 
 
@@ -797,10 +825,12 @@ textarea {
   font-size: 14px;
 }
 
+
+/* Форма заявки Работа с чек-боксом */
 .checkbox-group {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 0.3rem;
 }
 
 .checkbox-label {
@@ -808,15 +838,49 @@ textarea {
   align-items: center;
   font-weight: normal;
   cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 8px 12px;
+  border-radius: 6px;
+  margin: 2px 0;
+}
+/* Стили для невыбранного чекбокса */
+.checkbox-label {
+  color: var(--dark_font);
+  font-size: 1rem;
+  background-color: transparent;
+}
+
+/* Стили для выбранного чекбокса */
+.checkbox-label input:checked + span {
+  color: var(--dark_blue);
+  font-weight: bold;
 }
 
 .checkbox-label input {
-  margin-right: 8px;
+  margin-right: 1rem;
   width: auto;
 }
+.checkbox-label input[type="checkbox"] {
+  transform: scale(1.8);
+  margin-right: 16px;
+  margin-left: 4px;
+}
+
+/* Эффект при наведении на весь label */
+.checkbox-label:hover {
+  background-color: rgba(2, 113, 227, 0.1);
+}
+
+/* Эффект для выбранного элемента */
+.checkbox-label input:checked ~ span {
+  color: var(--blue);
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+
 
 .submit-btn {
-  background-color: #007bff;
+  background-color: var(--blue);
   color: white;
   padding: 12px 24px;
   border: none;
@@ -827,11 +891,11 @@ textarea {
 }
 
 .submit-btn:hover:not(:disabled) {
-  background-color: #0056b3;
+  background-color: var(--dark_blue);
 }
 
 .submit-btn:disabled {
-  background-color: #ccc;
+  background-color: var(--button_disabled);
   cursor: not-allowed;
 }
 

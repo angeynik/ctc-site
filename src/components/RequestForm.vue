@@ -19,10 +19,10 @@
           
           <div class="form-group">
             <label for="phone">Телефон:</label>
-            <div class="phone-input-container">
+            <div class="phone-input-container" :class="{ error: phoneError, success: formData.phone && !phoneError }">
               <select id="country" v-model="formData.country" @change="updatePlaceholder" class="country-select">
-                <option value="by">By</option>
-                <option value="ru">Ru</option>
+                <option value="by">BY</option>
+                <option value="ru">RU</option>
                 <option value="other">Other</option>
               </select>
               <input 
@@ -32,13 +32,17 @@
                 required 
                 :placeholder="phonePlaceholder"
                 class="phone-input"
+                @blur="validatePhone"
+                @input="clearPhoneError"
               >
             </div>
-            <!-- <small class="format-hint" v-if="formData.country">
+            <small class="format-hint" v-if="formData.country && !phoneError">
               Формат: {{ phonePlaceholder }}
-            </small> -->
+            </small>
+            <small v-if="phoneError" class="format-error">
+              {{ phoneError }}
+            </small>
           </div>
-
 
           
           <div class="form-group">
@@ -55,14 +59,14 @@
           <div class="form-group">
             <label>Интересует:</label>
             <div class="checkbox-group">
-              <label v-for="service in services" :key="service.value" class="checkbox-label">
-                <input 
-                  type="checkbox" 
-                  :value="service.value" 
-                  v-model="formData.interests"
-                >
-                {{ service.label }}
-              </label>
+            <label v-for="service in services" :key="service.value" class="checkbox-label">
+              <input 
+                type="checkbox" 
+                :value="service.value" 
+                v-model="formData.interests"
+              >
+              <span>{{ service.label }}</span>
+            </label>
             </div>
           </div>
           
@@ -76,7 +80,7 @@
             ></textarea>
           </div>
           
-          <button type="submit" class="submit-btn" :disabled="isSubmitting">
+          <button type="submit" class="submit-btn" :disabled="isSubmitting || phoneError">
             {{ isSubmitting ? 'Отправка...' : 'Отправить' }}
           </button>
         </form>
@@ -93,6 +97,8 @@
 </template>
 
 <script>
+import { validatePhone } from '@/store/modules/validate.js'
+
 export default {
   name: 'RequestForm',
   props: {
@@ -121,7 +127,8 @@ export default {
       isSubmitting: false,
       isSubmitted: false,
       countdown: 3,
-      countdownInterval: null
+      countdownInterval: null,
+      phoneError: ''
     }
   },
   watch: {
@@ -131,7 +138,7 @@ export default {
       }
     }
   },
-    computed: {
+  computed: {
     phonePlaceholder() {
       switch (this.formData.country) {
         case 'ru':
@@ -147,10 +154,52 @@ export default {
   },
   methods: {
     updatePlaceholder() {
-      // Очищаем поле при смене страны (опционально)
+      // Очищаем поле при смене страны и сбрасываем ошибку
       this.formData.phone = '';
+      this.phoneError = '';
     },
+    
+    validatePhone() {
+      if (!this.formData.phone.trim()) {
+        this.phoneError = 'Поле телефона обязательно для заполнения';
+        return false;
+      }
+
+      const isValid = validatePhone({
+        number: this.formData.phone,
+        region: this.formData.country.toUpperCase()
+      });
+
+      if (!isValid) {
+        switch (this.formData.country) {
+          case 'ru':
+            this.phoneError = 'Неверный формат номера. Пример: +7 (912) 345-67-89';
+            break;
+          case 'by':
+            this.phoneError = 'Неверный формат номера. Пример: +375 (29) 123-45-67';
+            break;
+          default:
+            this.phoneError = 'Неверный формат международного номера. Пример: +123 (456) 789-01-23';
+        }
+        return false;
+      }
+
+      this.phoneError = '';
+      return true;
+    },
+    
+    clearPhoneError() {
+      if (this.phoneError) {
+        this.phoneError = '';
+      }
+    },
+    
     submitForm() {
+      // Проверяем валидность телефона перед отправкой
+      if (!this.validatePhone()) {
+        return;
+      }
+
       this.isSubmitting = true;
       
       // Имитация отправки данных
@@ -184,10 +233,12 @@ export default {
       this.formData = {
         name: '',
         phone: '',
+        country: 'by',
         email: '',
         interests: [],
         message: ''
       };
+      this.phoneError = '';
       this.isSubmitted = false;
       this.isSubmitting = false;
     }
