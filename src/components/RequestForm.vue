@@ -44,30 +44,43 @@
             </small>
           </div>
 
-          
           <div class="form-group">
             <label for="email">Email:</label>
-            <input 
-              id="email" 
-              v-model="formData.email" 
-              type="email" 
-              required 
-              placeholder="your@email.com"
-            >
+            <div class="phone-input-container" :class="{ error: emailError, success: formData.email && !emailError }">
+              <input 
+                id="email" 
+                v-model="formData.email" 
+                type="email" 
+                required 
+                placeholder="your@email.com"
+                @blur="validateEmail"
+                @input="clearEmailError"
+              >
+            </div>
+            <small v-if="emailError" class="format-error">
+              {{ emailError }}
+            </small>
+            <small class="format-hint" v-if="formData.email && !emailError">
+              Корректный email адрес
+            </small>
           </div>
           
           <div class="form-group">
             <label>Интересует:</label>
             <div class="checkbox-group">
-            <label v-for="service in services" :key="service.value" class="checkbox-label">
-              <input 
-                type="checkbox" 
-                :value="service.value" 
-                v-model="formData.interests"
-              >
-              <span>{{ service.label }}</span>
-            </label>
+              <label v-for="service in services" :key="service.value" class="checkbox-label">
+                <input 
+                  type="checkbox" 
+                  :value="service.value" 
+                  v-model="formData.interests"
+                  @change="clearInterestsError"
+                >
+                <span>{{ service.label }}</span>
+              </label>
             </div>
+            <small v-if="interestsError" class="format-error">
+              {{ interestsError }}
+            </small>
           </div>
           
           <div class="form-group">
@@ -80,7 +93,11 @@
             ></textarea>
           </div>
           
-          <button type="submit" class="submit-btn" :disabled="isSubmitting || phoneError">
+          <button 
+            type="submit" 
+            class="submit-btn" 
+            :disabled="isSubmitting || !isFormValid"
+          >
             {{ isSubmitting ? 'Отправка...' : 'Отправить' }}
           </button>
         </form>
@@ -97,7 +114,7 @@
 </template>
 
 <script>
-import { validatePhone } from '@/store/modules/validate.js'
+import { validatePhone, validateEmail } from '@/store/modules/validate.js'
 
 export default {
   name: 'RequestForm',
@@ -128,14 +145,9 @@ export default {
       isSubmitted: false,
       countdown: 3,
       countdownInterval: null,
-      phoneError: ''
-    }
-  },
-  watch: {
-    isVisible(newVal) {
-      if (newVal && this.isSubmitted) {
-        this.resetForm();
-      }
+      phoneError: '',
+      emailError: '',
+      interestsError: ''
     }
   },
   computed: {
@@ -150,11 +162,25 @@ export default {
         default:
           return 'Сначала выберите страну';
       }
+    },
+    isFormValid() {
+      // Проверяем, что хотя бы одно из полей (телефон или email) заполнено и валидно
+      const hasValidPhone = this.formData.phone && !this.phoneError;
+      const hasValidEmail = this.formData.email && !this.emailError;
+      const hasInterests = this.formData.interests.length > 0;
+      
+      return (hasValidPhone || hasValidEmail) && hasInterests;
+    }
+  },
+  watch: {
+    isVisible(newVal) {
+      if (newVal && this.isSubmitted) {
+        this.resetForm();
+      }
     }
   },
   methods: {
     updatePlaceholder() {
-      // Очищаем поле при смене страны и сбрасываем ошибку
       this.formData.phone = '';
       this.phoneError = '';
     },
@@ -188,15 +214,64 @@ export default {
       return true;
     },
     
+    validateEmail() {
+      if (!this.formData.email.trim()) {
+        this.emailError = 'Поле email обязательно для заполнения';
+        return false;
+      }
+
+      const isValid = validateEmail(this.formData.email);
+
+      if (!isValid) {
+        this.emailError = 'Неверный формат email. Пример: example@domain.com';
+        return false;
+      }
+
+      this.emailError = '';
+      return true;
+    },
+    
     clearPhoneError() {
       if (this.phoneError) {
         this.phoneError = '';
       }
     },
     
+    clearEmailError() {
+      if (this.emailError) {
+        this.emailError = '';
+      }
+    },
+    
+    clearInterestsError() {
+      if (this.interestsError) {
+        this.interestsError = '';
+      }
+    },
+    
     submitForm() {
-      // Проверяем валидность телефона перед отправкой
-      if (!this.validatePhone()) {
+      // Проверяем, что выбран хотя бы один интерес
+      if (this.formData.interests.length === 0) {
+        this.interestsError = 'Выберите хотя бы один пункт';
+        return;
+      }
+      
+      // Проверяем, что хотя бы одно из полей (телефон или email) заполнено и валидно
+      const hasValidPhone = this.formData.phone && !this.phoneError;
+      const hasValidEmail = this.formData.email && !this.emailError;
+      
+      if (!hasValidPhone && !hasValidEmail) {
+        if (!this.formData.phone && !this.formData.email) {
+          this.phoneError = 'Заполните телефон или email';
+          this.emailError = 'Заполните телефон или email';
+        } else {
+          if (this.formData.phone && this.phoneError) {
+            this.validatePhone();
+          }
+          if (this.formData.email && this.emailError) {
+            this.validateEmail();
+          }
+        }
         return;
       }
 
@@ -207,6 +282,10 @@ export default {
         console.log('Форма отправлена:', this.formData);
         this.isSubmitting = false;
         this.isSubmitted = true;
+        
+        // Передаем все данные формы в родительский компонент
+        this.$emit('form-submitted', { ...this.formData });
+        
         this.startCountdown();
       }, 1500);
     },
@@ -239,6 +318,8 @@ export default {
         message: ''
       };
       this.phoneError = '';
+      this.emailError = '';
+      this.interestsError = '';
       this.isSubmitted = false;
       this.isSubmitting = false;
     }
